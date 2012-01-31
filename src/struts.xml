@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="nodeService" namespace="/node" extends="struts-default">
+		<action name="add" class="com.zj.retrieval.cluster.actions.node.AddNodeAction" method="execute">
+			<result name="success">/common-message.jsp</result>
+			<result name="error">/common-message.jsp</result>
+		</action>
+		<action name="delete" class="com.zj.retrieval.cluster.actions.node.DeleteNodeAction" method="execute">
+			<result name="success">/common-json.jsp</result>
+			<result name="error">/common-json.jsp</result>
+		</action>
+	</package>
+	
+</struts>

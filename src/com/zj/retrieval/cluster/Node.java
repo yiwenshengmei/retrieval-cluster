@@ -29,6 +29,7 @@ import freemarker.template.TemplateException;
 
 public class Node {
 	private String id;
+	private String author;
 	private String desc;
 	private String enName;
 	private Integer nodeType;
@@ -247,6 +248,12 @@ public class Node {
 				+ ", owl=" + owl.substring(0, 10) + "..." + ", parentURI=" + parentURI + ", label="
 				+ label + ", parentEnName=" + parentEnName
 				+ ", getImagesStr()=" + getImagesStr() + "]";
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 

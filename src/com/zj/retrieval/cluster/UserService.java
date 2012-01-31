@@ -55,10 +55,15 @@ public class UserService {
 		SqlParameterSource sps = new BeanPropertySqlParameterSource(oldUser);
 		return sqlClient.update(sql, sps);
 	}
-	public boolean suVerify(String postUserName, String postUserPassword) {
+	public boolean verifySu(String postUserName, String postUserPassword) {
 //		Util.fixDataSourceUrl(dataSource);
 		String sql = "select count(*) from `su` where `name`=? and `password`=?";
 		return sqlClient.queryForInt(sql, postUserName, postUserPassword) > 0;
+	}
+	public boolean verifyUser(String name, String password) {
+//		Util.fixDataSourceUrl(dataSource);
+		String sql = "select count(*) form `user` where `name`=? and `password`=?";
+		return sqlClient.queryForInt(sql, name, password) > 0;
 	}
 	
 }

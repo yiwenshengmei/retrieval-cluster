@@ -35,7 +35,7 @@ public class QueryNodeAction {
 		if (id.equals("*")) {
 			this.queryResult = ndService.queryAllNode();
 		} else {
-			this.queryResult = ndService.queryNodeById(id);
+			this.queryResult.add(ndService.queryNodeById(id));
 		}
 		return ActionSupport.SUCCESS;
 	}

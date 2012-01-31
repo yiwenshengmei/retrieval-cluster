@@ -68,7 +68,7 @@ public class AddNodeAction {
 	public String execute() {
 		try {
 			UserService usrService = Util.getUserService();
-			if (!usrService.suVerify(post_user_name, post_user_password)) {
+			if (!usrService.verifySu(post_user_name, post_user_password)) {
 				this.message = "Wrong user name or password.";
 				return ActionSupport.ERROR;
 			}
@@ -100,7 +100,7 @@ public class AddNodeAction {
 			nd.setUriName(uri_name);
 			nd.setLabel(label);
 			
-			if (!user_field.isEmpty() || user_field != null) {
+			if (user_field != null && !user_field.equals("")) {
 				JSONArray jarray = new JSONArray(user_field);
 				Map<String, String> userFieldMap = new HashMap<String, String>();
 				for (int i = 0; i < jarray.length(); i++) {

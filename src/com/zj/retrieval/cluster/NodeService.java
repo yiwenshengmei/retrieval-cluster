@@ -1,5 +1,6 @@
 package com.zj.retrieval.cluster;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,21 +52,20 @@ public class NodeService {
 		return result;
 	}
 
-	public List<Node> queryNodeById(String id) {
+	public Node queryNodeById(String id) {
 //		Util.fixDataSourceUrl(dataSource);
 		String sql = "select `id`, `name`, `owl`, `images` as imagesStr, `parent_name` as parentEnName " +
 				"from `node` where `id`=?";
 		ParameterizedRowMapper<Node> rm = 
 			ParameterizedBeanPropertyRowMapper.newInstance(Node.class);
-		List<Node> queryResult = sqlClient.query(sql, rm, id);
-		for (Node nd : queryResult) {
-			try {
-				Node.parseFromOWL(nd.getOwl(), nd);
-			} catch (Exception e) {
-				log.error("解析节点时发生错误，node.id = " + nd.getId(), e);
-			}
+		Node nd = sqlClient.queryForObject(sql, rm, id);
+		try {
+			Node.parseFromOWL(nd.getOwl(), nd);
+		} catch (Exception e) {
+			throw new InvalidParameterException(
+					String.format("不存在id为%1$s的节点，请检查", id));
 		}
-		return queryResult;
+		return nd;
 	}
 
 	public int deleteNodeById(String id) {

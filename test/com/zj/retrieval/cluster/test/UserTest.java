@@ -33,9 +33,9 @@ public class UserTest {
 	@Test
 	public void suVerifyTest() {
 		UserService userService = getUserService();
-		assertTrue(userService.suVerify("su", "123"));
-		assertFalse(userService.suVerify("su1", "123"));
-		assertFalse(userService.suVerify("su", "1234"));
+		assertTrue(userService.verifySu("su", "123"));
+		assertFalse(userService.verifySu("su1", "123"));
+		assertFalse(userService.verifySu("su", "1234"));
 	}
 	
 	@Test

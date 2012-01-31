@@ -101,12 +101,12 @@ public class NodeTest {
 		String id = "acf32-444-5555-s-abdc";
 		ApplicationContext ctx = getApplicationContext();
 		NodeService ns = (NodeService) ctx.getBean("nodeService");
-		Node before = ns.queryNodeById(id).get(0);
+		Node before = ns.queryNodeById(id);
 		before.setName(newName);
 		int result = ns.updateNode(before);
 		System.out.println("result: " + result);
 		assertTrue(result == 1);
-		Node after = ns.queryNodeById(id).get(0);
+		Node after = ns.queryNodeById(id);
 		System.out.println("Name: " + after.getName());
 		assertTrue(after.getName().equals(newName));
 	}

@@ -18,11 +18,10 @@
 	String node_id = request.getParameter("node_id");
 	NodeService ns = Util.getNodeService();
 	
-	List<Node> result = ns.queryNodeById(node_id);
-	if (result.size() == 0) {
+	Node nd = ns.queryNodeById(node_id);
+	if (nd == null) {
 		out.print("不存在编号为：" + node_id + " 的物种。");
 	} else {
-		Node nd = result.get(0);
 		out.print(String.format("<tr><td>id: </td><td>%1$s</td></tr>", nd.getId()));
 		out.print(String.format("<tr><td>name: </td><td>%1$s</td></tr>", nd.getName()));
 		out.print(String.format("<tr><td>english name: </td><td>%1$s</td></tr>", nd.getEnName()));

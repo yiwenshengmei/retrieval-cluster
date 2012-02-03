@@ -40,13 +40,13 @@ public class Node {
 	private String owl;
 	private String parentURI;
 	private String label;
-	private String parentEnName;
+	private String parentNameEN;
 	private static Log log = LogFactory.getLog(Node.class);
 	public String getParentEnName() {
-		return parentEnName;
+		return parentNameEN;
 	}
 	public void setParentEnName(String parentEnName) {
-		this.parentEnName = parentEnName;
+		this.parentNameEN = parentEnName;
 	}
 	public String getLabel() {
 		return label;
@@ -246,7 +246,7 @@ public class Node {
 				+ ", nodeType=" + nodeType + ", uri=" + uri + ", uriName="
 				+ uriName + ", userField=" + userField + ", name=" + name
 				+ ", owl=" + owl.substring(0, 10) + "..." + ", parentURI=" + parentURI + ", label="
-				+ label + ", parentEnName=" + parentEnName
+				+ label + ", parentEnName=" + parentNameEN
 				+ ", getImagesStr()=" + getImagesStr() + "]";
 	}
 	public String getAuthor() {

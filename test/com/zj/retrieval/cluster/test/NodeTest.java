@@ -17,11 +17,11 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.zj.retrieval.cluster.Node;
-import com.zj.retrieval.cluster.NodeService;
 import com.zj.retrieval.cluster.NodeType;
 import com.zj.retrieval.cluster.Util;
 import com.zj.retrieval.cluster.actions.node.AddNodeAction;
 import com.zj.retrieval.cluster.actions.node.QueryNodeAction;
+import com.zj.retrieval.cluster.dao.NodeDao;
 
 public class NodeTest {
 	
@@ -89,8 +89,8 @@ public class NodeTest {
 	public void deleteNodeTest() {
 		String id = "e7774a77-4b1e-4c74-9486-bb40ca19afac";
 		ApplicationContext ctx = getApplicationContext();
-		NodeService ns = (NodeService) ctx.getBean("nodeService");
-		int result = ns.deleteNodeById(id);
+		NodeDao ns = (NodeDao) ctx.getBean("nodeService");
+		int result = ns.removeNodeById(id);
 		System.out.println("result: " + result);
 		assertTrue(result == 1);
 	}
@@ -100,13 +100,13 @@ public class NodeTest {
 		String newName = "LiYu+3";
 		String id = "acf32-444-5555-s-abdc";
 		ApplicationContext ctx = getApplicationContext();
-		NodeService ns = (NodeService) ctx.getBean("nodeService");
-		Node before = ns.queryNodeById(id);
+		NodeDao ns = (NodeDao) ctx.getBean("nodeService");
+		Node before = ns.getNodeById(id);
 		before.setName(newName);
 		int result = ns.updateNode(before);
 		System.out.println("result: " + result);
 		assertTrue(result == 1);
-		Node after = ns.queryNodeById(id);
+		Node after = ns.getNodeById(id);
 		System.out.println("Name: " + after.getName());
 		assertTrue(after.getName().equals(newName));
 	}

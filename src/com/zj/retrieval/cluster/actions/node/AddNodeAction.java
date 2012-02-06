@@ -16,10 +16,10 @@ import org.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.zj.retrieval.cluster.Node;
-import com.zj.retrieval.cluster.NodeService;
 import com.zj.retrieval.cluster.NodeType;
-import com.zj.retrieval.cluster.UserService;
 import com.zj.retrieval.cluster.Util;
+import com.zj.retrieval.cluster.dao.NodeDao;
+import com.zj.retrieval.cluster.dao.UserDao;
 
 public class AddNodeAction {
 	private String name;
@@ -67,12 +67,12 @@ public class AddNodeAction {
 
 	public String execute() {
 		try {
-			UserService usrService = Util.getUserService();
+			UserDao usrService = Util.getUserDao();
 			if (!usrService.verifySu(post_user_name, post_user_password)) {
 				this.message = "Wrong user name or password.";
 				return ActionSupport.ERROR;
 			}
-			NodeService ndService = Util.getNodeService();
+			NodeDao ndService = Util.getNodeDao();
 			
 			Node nd = new Node();
 			nd.setDesc(desc);

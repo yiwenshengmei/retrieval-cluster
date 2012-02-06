@@ -1,9 +1,9 @@
 package com.zj.retrieval.cluster.actions.node;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.zj.retrieval.cluster.NodeService;
-import com.zj.retrieval.cluster.UserService;
 import com.zj.retrieval.cluster.Util;
+import com.zj.retrieval.cluster.dao.NodeDao;
+import com.zj.retrieval.cluster.dao.UserDao;
 
 public class DeleteNodeAction {
 	private String node_id;
@@ -33,14 +33,14 @@ public class DeleteNodeAction {
 	}
 	
 	public String execute() {
-		UserService usrService = Util.getUserService();
+		UserDao usrService = Util.getUserDao();
 		if (!usrService.verifySu(post_user_name, post_user_password)) {
 			this.message = "Wrong user name or password.";
 			this.isError = true;
 			return ActionSupport.ERROR;
 		}
-		NodeService ns = Util.getNodeService();
-		int result = ns.deleteNodeById(node_id);
+		NodeDao ns = Util.getNodeDao();
+		int result = ns.removeNodeById(node_id);
 		if (result != 1) {
 			this.message = "Sorry, Something wrong, %>_<%";
 			this.isError = true;

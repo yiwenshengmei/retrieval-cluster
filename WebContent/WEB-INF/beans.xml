@@ -25,10 +25,10 @@
 <!-- 		 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 -->
 		<property name="minIdle" value="1"/>
 	</bean>
-	<bean id="nodeService" class="com.zj.retrieval.cluster.NodeService">
+	<bean id="nodeDao" class="com.zj.retrieval.cluster.dao.NodeDao">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	<bean id="userService" class="com.zj.retrieval.cluster.UserService">
+	<bean id="userDao" class="com.zj.retrieval.cluster.dao.UserDao">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 </beans>

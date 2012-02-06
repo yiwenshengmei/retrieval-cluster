@@ -8,9 +8,9 @@ import org.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.zj.retrieval.cluster.Node;
-import com.zj.retrieval.cluster.NodeService;
-import com.zj.retrieval.cluster.UserService;
 import com.zj.retrieval.cluster.Util;
+import com.zj.retrieval.cluster.dao.NodeDao;
+import com.zj.retrieval.cluster.dao.UserDao;
 
 public class QueryNodeForRemoteAction {
 	private String user_name;
@@ -22,15 +22,15 @@ public class QueryNodeForRemoteAction {
 	
 	public String execute() {
 		try {
-			UserService usrService = Util.getUserService();
+			UserDao usrService = Util.getUserDao();
 			if (!usrService.verifyUser(user_name, user_pwd)) {
 				this.message = "Wrong user name or password.";
 				this.isError = true;
 				return ActionSupport.ERROR;
 			}
 			
-			NodeService ndService = Util.getNodeService();
-			Node nd = ndService.queryNodeById(node_id);
+			NodeDao ndService = Util.getNodeDao();
+			Node nd = ndService.getNodeById(node_id);
 			JSONObject jNode = new JSONObject();
 			
 			processBaseInfo(jNode, nd);

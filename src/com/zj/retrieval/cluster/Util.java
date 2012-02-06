@@ -18,6 +18,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.zj.retrieval.cluster.dao.NodeDao;
+import com.zj.retrieval.cluster.dao.UserDao;
+
 public class Util {
 	private static boolean dbPathHasFixed = false;
 	public static ApplicationContext applicationContext = null;
@@ -44,13 +47,13 @@ public class Util {
 		}
 	}
 	
-	public static UserService getUserService() {
+	public static UserDao getUserDao() {
 		ApplicationContext ctx = getApplicationContext();
-		return (UserService) ctx.getBean("userService");
+		return (UserDao) ctx.getBean("userDao");
 	}
 	
-	public static NodeService getNodeService() {
-		return (NodeService) getApplicationContext().getBean("nodeService");
+	public static NodeDao getNodeDao() {
+		return (NodeDao) getApplicationContext().getBean("nodeDao");
 	}
 	
 	public static String html(String content) {

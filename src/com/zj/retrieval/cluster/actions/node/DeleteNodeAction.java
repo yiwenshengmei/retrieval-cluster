@@ -33,8 +33,8 @@ public class DeleteNodeAction {
 	}
 	
 	public String execute() {
-		UserDao usrService = Util.getUserDao();
-		if (!usrService.verifySu(post_user_name, post_user_password)) {
+		UserDao userDao = Util.getUserDao();
+		if (!userDao.verifySu(post_user_name, post_user_password)) {
 			this.message = "Wrong user name or password.";
 			this.isError = true;
 			return ActionSupport.ERROR;

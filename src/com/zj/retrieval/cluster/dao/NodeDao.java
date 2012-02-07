@@ -8,6 +8,8 @@ import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
@@ -29,13 +31,13 @@ public class NodeDao {
 	
 	public List<Node> getAllNode() {
 		Util.fixDataSourceUrl(dataSource);
-		String sql = "select `id`, `name`, `owl`, `images` as imagesStr, `parent_name` as parentEnName from `node`";
+		String sql = "select `id`, `name`, `owl`, `images` as imagesStr, `parent_name_en` as parentEnglishName from `node`";
 		ParameterizedRowMapper<Node> rm = 
 			ParameterizedBeanPropertyRowMapper.newInstance(Node.class);
 		List<Node> queryResult = sqlClient.query(sql, rm);
 		for (Node nd : queryResult) {
 			try {
-				Node.parseFromOWL(nd.getOwl(), nd);
+				Node.parseNodeFromOWL(nd.getOwl(), nd);
 			} catch (Exception e) {
 				log.error("解析节点时发生错误，node.id = " + nd.getId(), e);
 			}
@@ -45,11 +47,11 @@ public class NodeDao {
 
 	public int addNode(Node nd) {
 		Util.fixDataSourceUrl(dataSource);
-		nd.setOwl(Node.getOwlFromNode(nd));
+		nd.setOwl(Node.getOWLFromNode(nd));
 		System.out.println("[OWL]: " + nd.getOwl());
 		if (nd.getId() == null) nd.setId(UUID.randomUUID().toString());
 		
-		String sql = "insert into `node`(`id`, `name`, `owl`, `images`, `parent_name`) values(:id, :name, :owl, :imagesStr, :parentEnName)";
+		String sql = "insert into `node`(`id`, `name`, `owl`, `images`, `parent_name_en`) values(:id, :name, :owl, :imagesStr, :parentEnglishName)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(nd);
 		int result = sqlClient.update(sql, param);
 		return result;
@@ -57,18 +59,21 @@ public class NodeDao {
 
 	public Node getNodeById(String id) {
 		Util.fixDataSourceUrl(dataSource);
-		String sql = "select `id`, `name`, `owl`, `images` as imagesStr, `parent_name` as parentEnName " +
-				"from `node` where `id`=?";
-		ParameterizedRowMapper<Node> rm = 
-			ParameterizedBeanPropertyRowMapper.newInstance(Node.class);
-		Node nd = sqlClient.queryForObject(sql, rm, id);
 		try {
-			Node.parseFromOWL(nd.getOwl(), nd);
-		} catch (Exception e) {
+			String sql = "select `id`, `name`, `owl`, `images` as imagesStr, `parent_name_en` as parentEnglishName " +
+				"from `node` where `id`=?";
+			ParameterizedRowMapper<Node> rm = 
+					ParameterizedBeanPropertyRowMapper.newInstance(Node.class);
+			Node nd;
+			nd = sqlClient.queryForObject(sql, rm, id);
+			Node.parseNodeFromOWL(nd.getOwl(), nd);
+			return nd;
+		} catch (EmptyResultDataAccessException e) {
 			throw new InvalidParameterException(
 					String.format("不存在id为%1$s的节点，请检查", id));
+		} catch (Exception e) {
+			throw new InvalidParameterException("解析OWL时发生错误");
 		}
-		return nd;
 	}
 
 	public int removeNodeById(String id) {

@@ -44,13 +44,14 @@
 UserDao dao = Util.getUserDao();
 List<User> users = dao.getAllUser();
 %>
-<div>
+<div style='width: 600px;margin: 0 auto;'>
 	UserID: <input id='post_user_name' type="text" name='post_user_id'/>
 	UserPassword: <input id='post_user_password' type='password' name='post_user_password'>
 </div>
-<table>
+<table style='width: 600px;margin: 0 auto;'>
+	<tr><td>ID</td><td>Name</td><td></td></tr>
 	<% for (User user : users) { %>
-	<tr><td><%=user.getId() %></td><td><%=user.getName() %></td><td><a href='#' onclick='delete_user(<%=user.getId()%>);'>DELETE</a></td></tr>
+	<tr id='<%=user.getId()%>'><td><%=user.getId() %></td><td><%=user.getName() %></td><td><a href='#' onclick='delete_user("<%=user.getId()%>");'>DELETE</a></td></tr>
 	<% } %>
 	
 </table>

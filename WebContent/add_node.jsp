@@ -110,7 +110,7 @@
 	</script>
 </head>
 <body>
-	<form id="add_node_form" action="node/add" method="post" enctype="multipart/form-data" >
+	<form style='width: 600px; margin: 0 auto;' id="add_node_form" action="node/add" method="post" enctype="multipart/form-data" >
 		<table id="base_info">
 			<tr><td>node name: </td><td><input name="name" type="text"/></td></tr>
 			<tr><td>node name en: </td><td><input name="name_en" type="text"/></td></tr>
@@ -118,7 +118,6 @@
 			<tr><td>uri:</td><td><input name="uri" type="text"/></td></tr>
 			<tr><td>uri name: </td><td><input name="uri_name" type="text"/></td></tr>
 			<tr><td>label: </td><td><input name="label" type="text"/></td></tr>
-			<tr><td>parent uri: </td><td><input name="parent_uri"/></td></tr>
 			<tr><td>parent name en: </td><td><input name="parent_name_en"/></td></tr>
 		</table>
 		

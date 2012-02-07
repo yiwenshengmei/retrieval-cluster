@@ -1,10 +1,6 @@
 package com.zj.retrieval.cluster;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,31 +18,25 @@ import org.xml.sax.InputSource;
 
 import com.jamesmurty.utils.XMLBuilder;
 
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-
 public class Node {
 	private String id;
 	private String author;
 	private String desc;
-	private String enName;
+	private String nameEN;
 	private Integer nodeType;
 	private String uri;
 	private String uriName;
 	private Map<String, String> userField;
 	private String name;
 	private String owl;
-	private String parentURI;
 	private String label;
-	private String parentNameEN;
+	private String parentEnglishName;
 	private static Log log = LogFactory.getLog(Node.class);
-	public String getParentEnName() {
-		return parentNameEN;
+	public String getParentEnglishName() {
+		return parentEnglishName;
 	}
-	public void setParentEnName(String parentEnName) {
-		this.parentNameEN = parentEnName;
+	public void setParentEnglishName(String parentEnglishName) {
+		this.parentEnglishName = parentEnglishName;
 	}
 	public String getLabel() {
 		return label;
@@ -54,13 +44,7 @@ public class Node {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	public String getParentURI() {
-		return parentURI;
-	}
-	public void setParentURI(String parentURI) {
-		this.parentURI = parentURI;
-	}
-	public static void parseFromOWL(String owl, Node node) throws Exception {
+	public static void parseNodeFromOWL(String owl, Node node) throws Exception {
 		try {
 			
 			if (owl == null || owl.equals("")) {
@@ -73,7 +57,7 @@ public class Node {
 			XMLBuilder builder = XMLBuilder.parse(new InputSource(new StringReader(node.getOwl())));
 			
 			// 解析uri, uriname
-			String uriName = builder.xpathFind(String.format("/RDF/%1$s", node.getParentEnName())).getElement().getAttribute("rdf:ID");
+			String uriName = builder.xpathFind(String.format("/RDF/%1$s", node.getParentEnglishName())).getElement().getAttribute("rdf:ID");
 			String uri = uriName.split("#")[0];
 			
 			// 解析name_en
@@ -84,7 +68,7 @@ public class Node {
 			Map<String, String> userfields = new HashMap<String, String>();
 			try {
 				NodeList nodeFields = builder.xpathFind(
-						String.format("/RDF/%1$s/userfields", node.getParentEnName())
+						String.format("/RDF/%1$s/userfields", node.getParentEnglishName())
 				).getElement().getChildNodes();
 				for (int i = 0; i < nodeFields.getLength(); i++) {
 					String key = ((Element) nodeFields.item(i)).getAttribute("key");
@@ -92,27 +76,27 @@ public class Node {
 					userfields.put(key, value);
 				}
 			} catch (XPathExpressionException e) {
-				log.info(String.format("不存在节点/RDF/%1$s/userfields, userField将保持为空", node.getParentEnName()));
+				log.info(String.format("不存在节点/RDF/%1$s/userfields, userField将保持为空", node.getParentEnglishName()));
 			}
 			
 			// 解析label
 			String label = "";
 			try {
 				label = builder.xpathFind(
-						String.format("/RDF/%1$s/label", node.getParentEnName())
+						String.format("/RDF/%1$s/label", node.getParentEnglishName())
 				).getElement().getTextContent();
 			} catch (Exception e1) {
-				log.info(String.format("不存在节点/RDF/%1$s/label, label将保持为空", node.getParentEnName()));
+				log.info(String.format("不存在节点/RDF/%1$s/label, label将保持为空", node.getParentEnglishName()));
 			}
 			
 			// 解析Desc
 			String desc = "";
 			try {
 				desc = builder.xpathFind(
-						String.format("/RDF/%1$s/desc", node.getParentEnName())
+						String.format("/RDF/%1$s/desc", node.getParentEnglishName())
 				).getElement().getTextContent();
 			} catch(XPathExpressionException e) {
-				log.info(String.format("不存在节点/RDF/%1$s/desc, desc将保持为空", node.getParentEnName()));
+				log.info(String.format("不存在节点/RDF/%1$s/desc, desc将保持为空", node.getParentEnglishName()));
 			}
 			
 			node.setDesc(desc);
@@ -120,14 +104,14 @@ public class Node {
 			node.setUri(uri);
 			node.setLabel(label);
 			node.setUserField(userfields);
-			node.setEnName(name_en);
+			node.setEnglishName(name_en);
 		} catch (Exception e) {
 			log.error("解析OWL时出错", e);
 			throw new Exception("解析OWL时出错@NodeService.parseFromOWL()", e);
 		}
 	}
 	
-	public static String getOwlFromNode(Node nd) {
+	public static String getOWLFromNode(Node nd) {
 
 		String result = null;
 		try {
@@ -140,8 +124,8 @@ public class Node {
 			builder.a("xmlns:xsd", "http://www.w3.org/2001/XMLSchema#");
 			
 			// 创建individual类型节点的owl格式
-			XMLBuilder individual = builder.e(nd.getParentEnName());
-			individual.a("rdf:ID", nd.getUri() + "#" + nd.getEnName())
+			XMLBuilder individual = builder.e(nd.getParentEnglishName());
+			individual.a("rdf:ID", nd.getUri() + "#" + nd.getEnglishName())
 				.e("label").t(nd.getLabel()).up()
 				.e("name").t(nd.getName()).up()
 				.e("desc").t(nd.getDesc());
@@ -172,11 +156,11 @@ public class Node {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public String getEnName() {
-		return enName;
+	public String getEnglishName() {
+		return nameEN;
 	}
-	public void setEnName(String enName) {
-		this.enName = enName;
+	public void setEnglishName(String enName) {
+		this.nameEN = enName;
 	}
 	public Integer getNodeType() {
 		return nodeType;
@@ -237,17 +221,12 @@ public class Node {
 		return result.substring(0, result.length() - 1);
 	}
 	public void setImagesStr(String str) {
-		String[] splited = str.split(";");
-		images = Arrays.asList(splited);
-	}
-	@Override
-	public String toString() {
-		return "Node [id=" + id + ", desc=" + desc + ", enName=" + enName
-				+ ", nodeType=" + nodeType + ", uri=" + uri + ", uriName="
-				+ uriName + ", userField=" + userField + ", name=" + name
-				+ ", owl=" + owl.substring(0, 10) + "..." + ", parentURI=" + parentURI + ", label="
-				+ label + ", parentEnName=" + parentNameEN
-				+ ", getImagesStr()=" + getImagesStr() + "]";
+		if (str == null || str.isEmpty()) {
+			images = new ArrayList<String>();
+		} else {
+			String[] splited = str.split(";");
+			images = Arrays.asList(splited);
+		}
 	}
 	public String getAuthor() {
 		return author;
@@ -255,7 +234,4 @@ public class Node {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-
-
-	
 }

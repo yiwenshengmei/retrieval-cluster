@@ -13,7 +13,7 @@
 	<!-- retrieval-cluster 的 Spring 配置文件 -->      
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.sqlite.JDBC"/>
-	 	<property name="url" value="jdbc:sqlite://E:/cluster.db"/>
+	 	<property name="url" value="jdbc:sqlite:cluster.db"/>
 <!-- 		<property name="username" value="root"/> -->
 <!-- 	  	<property name="password" value="zhaojie"/>   -->
 		<!-- 连接池启动时的初始值 -->

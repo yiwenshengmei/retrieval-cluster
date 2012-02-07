@@ -28,7 +28,6 @@ public class AddNodeAction {
 	private String uri;
 	private String uri_name;
 	private String user_field;
-	private String parent_uri;
 	private String label;
 	private String parent_name_en;
 	private File[] images;
@@ -48,10 +47,6 @@ public class AddNodeAction {
 		this.label = label;
 	}
 
-	public void setParent_uri(String parent_uri) {
-		this.parent_uri = parent_uri;
-	}
-	
 	public void setImages(File[] images) {
 		this.images = images;
 	}
@@ -76,9 +71,8 @@ public class AddNodeAction {
 			
 			Node nd = new Node();
 			nd.setDesc(desc);
-			nd.setEnName(name_en);
-			nd.setParentURI(parent_uri);
-			nd.setParentEnName(parent_name_en);
+			nd.setEnglishName(name_en);
+			nd.setParentEnglishName(parent_name_en);
 			
 			List<String> imagelist = new ArrayList<String>();
 			String realpath = ServletActionContext.getServletContext().getRealPath("/images");

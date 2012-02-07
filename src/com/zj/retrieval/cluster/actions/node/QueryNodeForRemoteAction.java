@@ -48,7 +48,7 @@ public class QueryNodeForRemoteAction {
 	
 	private void processBaseInfo(JSONObject jNode, Node nd) throws JSONException {
 		jNode.put("name", nd.getName());
-		jNode.put("name_en", nd.getEnName());
+		jNode.put("name_en", nd.getEnglishName());
 		jNode.put("author", nd.getAuthor());
 		jNode.put("desc", nd.getDesc());
 		jNode.put("uri", nd.getUri());

@@ -27,13 +27,13 @@ public class AddUserAction {
 	}
 	public String execute() {
 		try {
-			UserDao us = Util.getUserDao();
-			if (us.verifySu(post_user_name, post_user_password)) {
+			UserDao userDao = Util.getUserDao();
+			if (!userDao.verifySu(post_user_name, post_user_password)) {
 				this.isError = true;
 				this.message = "用户名或密码错误";
 				return ActionSupport.ERROR;
 			}
-			List<User> queryResult = us.getUserByName(name);
+			List<User> queryResult = userDao.getUserByName(name);
 			if (queryResult.size() > 0) {
 				this.isError = true;
 				this.message = String.format("已经存在用户名为%1$s的用户，请换一个名字。", name);
@@ -43,7 +43,7 @@ public class AddUserAction {
 				user.setId(UUID.randomUUID().toString());
 				user.setName(name);
 				user.setPassword(password);
-				int result = us.addUser(user);
+				int result = userDao.addUser(user);
 				if (result == 1) {
 					this.isError = false;
 					this.message = "添加成功 o(∩_∩)o...";

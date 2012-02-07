@@ -16,7 +16,7 @@ public class OWLTester {
 	public void testOowl() {
 		Node nd = new Node();
 		nd.setDesc("ThisIsDesc");
-		nd.setEnName("ThisIsEnglishName");
+		nd.setEnglishName("ThisIsEnglishName");
 		nd.setName("DaTouYu");
 		nd.setNodeType(NodeType.NODETYPE_INDIVIDUAL);
 		nd.setParentURI("Thisisparenturi");
@@ -34,9 +34,9 @@ public class OWLTester {
 		user_field_mapper.put("diy_age", "14");
 		
 		nd.setUserField(user_field_mapper);
-		nd.setParentEnName("Thisisparentnameen");
+		nd.setParentEnglishName("Thisisparentnameen");
 		
-		String owl = Node.getOwlFromNode(nd);
+		String owl = Node.getOWLFromNode(nd);
 		System.out.println(owl);
 	}
 }

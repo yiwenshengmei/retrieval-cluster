@@ -41,19 +41,19 @@
 <title>查看本机所有物种</title>
 </head>
 <body>
-<div>
+<div style="width: 80%; margin: 0 auto;">
 	UserID: <input id='post_user_name' type="text" name='post_user_id'/>
 	UserPassword: <input id='post_user_password' type='password' name='post_user_password'>
 </div>
-<table width="100%">
+<table style="width: 80%; margin: 0 auto;">
 	<tr><td>编号</td><td>名称</td><td>英文名称</td><td>描述</td><td>父节点英文名称</td><td></td><td></td></tr>
-<% 
+<%
 	NodeDao dao = Util.getNodeDao();
 	List<Node> nodes = dao.getAllNode();
 	for (Node nd : nodes) {
 		out.print(String.format("<tr id='%1$s'><td>%1$s</td><td>%2$s</td><td>%3$s</td><td>%4$s</td>" +
-			"<td>%5$s</td><td><a href='#' onclick=\"delete_node('%1$s')\">DELETE</a></td><td><a target='_blank' href='view-node-detail.jsp?node_id=%1$s'>View Detail</a></td></tr>", 
-			nd.getId(), nd.getName(), nd.getEnName(), nd.getDesc(), nd.getParentEnName()));
+	"<td>%5$s</td><td><a href='#' onclick=\"delete_node('%1$s')\">DELETE</a></td><td><a target='_blank' href='view_node_detail.jsp?node_id=%1$s'>View Detail</a></td></tr>", 
+	nd.getId(), nd.getName(), nd.getEnglishName(), nd.getDesc(), nd.getParentEnglishName()));
 	}
 %>
 </table>

@@ -16,7 +16,7 @@ public class DeleteUserAction {
 	public String execute() {
 		try {
 			UserDao us = Util.getUserDao();
-			if (us.verifySu(post_user_name, post_user_password)) {
+			if (!us.verifySu(post_user_name, post_user_password)) {
 				this.isError = true;
 				this.message = "用户名或密码错误";
 				return ActionSupport.ERROR;

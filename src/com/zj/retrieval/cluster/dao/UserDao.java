@@ -21,27 +21,27 @@ public class UserDao {
 	}
 	public int addUser(User usr) {
 		Util.fixDataSourceUrl(dataSource);
-		String sql = "insert into `user` values(:id, :name, :password, :authType)";
+		String sql = "insert into `user` values(:id, :name, :password)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(usr);
 		return sqlClient.update(sql, param);
 	}
 	public List<User> getAllUser() {
 		Util.fixDataSourceUrl(dataSource);
-		String sql = "select `id`, `name`, `password`, `auth_type` as authType from `user`";
+		String sql = "select `id`, `name`, `password` from `user`";
 		ParameterizedBeanPropertyRowMapper<User> rm = 
 			ParameterizedBeanPropertyRowMapper.newInstance(User.class);
 		return sqlClient.query(sql, rm);
 	}
 	public List<User> getUserById(String id) {
 		Util.fixDataSourceUrl(dataSource);
-		String sql = "select `id`, `name`, `password`, `auth_type` as authType from `user` where `id`=?";
+		String sql = "select `id`, `name`, `password` from `user` where `id`=?";
 		ParameterizedBeanPropertyRowMapper<User> rm =
 			ParameterizedBeanPropertyRowMapper.newInstance(User.class);
 		return sqlClient.query(sql, rm, id);
 	}
 	public List<User> getUserByName(String name) {
 		Util.fixDataSourceUrl(dataSource);
-		String sql = "select `id`, `name`, `password`, `auth_type` as authType from `user` where `name`=?";
+		String sql = "select `id`, `name`, `password` from `user` where `name`=?";
 		ParameterizedBeanPropertyRowMapper<User> rm =
 			ParameterizedBeanPropertyRowMapper.newInstance(User.class);
 		return sqlClient.query(sql, rm, name);
@@ -53,7 +53,7 @@ public class UserDao {
 	}
 	public int updateUser(User oldUser) {
 		Util.fixDataSourceUrl(dataSource);
-		String sql = "update `user` set `id`=:id, `name`=:name, `password`=:password, `auth_type`=:authType where `id`=:id";
+		String sql = "update `user` set `id`=:id, `name`=:name, `password`=:password where `id`=:id";
 		SqlParameterSource sps = new BeanPropertySqlParameterSource(oldUser);
 		return sqlClient.update(sql, sps);
 	}

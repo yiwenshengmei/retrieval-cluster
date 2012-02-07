@@ -18,28 +18,28 @@
 	String node_id = request.getParameter("node_id");
 	NodeDao dao = Util.getNodeDao();
 	
-	Node nd = dao.getNodeById(node_id);
-	if (nd == null) {
-		out.print("不存在编号为：" + node_id + " 的物种。");
-	} else {
+	try {
+		Node nd = dao.getNodeById(node_id);
+		out.print("<tr><td style='width: 30%'></td><td style='width: 70%'></td></tr>");
 		out.print(String.format("<tr><td>id: </td><td>%1$s</td></tr>", nd.getId()));
 		out.print(String.format("<tr><td>name: </td><td>%1$s</td></tr>", nd.getName()));
-		out.print(String.format("<tr><td>english name: </td><td>%1$s</td></tr>", nd.getEnName()));
+		out.print(String.format("<tr><td>english name: </td><td>%1$s</td></tr>", nd.getEnglishName()));
 		out.print(String.format("<tr><td>uri: </td><td>%1$s</td></tr>", nd.getUri()));
 		out.print(String.format("<tr><td>uri name: </td><td>%1$s</td></tr>", nd.getUriName()));
 		out.print(String.format("<tr><td>description: </td><td>%1$s</td></tr>", nd.getDesc()));
 		out.print(String.format("<tr><td>label: </td><td>%1$s</td></tr>", nd.getLabel()));
 		out.print(String.format("<tr><td>owl: </td><td>%1$s</td></tr>", Util.html(Util.formatXML(nd.getOwl(), 4))));
-		out.print(String.format("<tr><td>english name of parent: </td><td>%1$s</td></tr>", nd.getParentEnName()));
-		out.print(String.format("<tr><td>uri of parent: </td><td>%1$s</td></tr>", nd.getParentURI()));
+		out.print(String.format("<tr><td>english name of parent: </td><td>%1$s</td></tr>", nd.getParentEnglishName()));
 		out.print("<tr><td colspan='2'>====== User Field ======</td></tr>");
 		for (Entry<String, String> field : nd.getUserField().entrySet()) {
-	out.print(String.format("<tr><td>%1$s</td><td>%2$s</td></tr>", field.getKey(), field.getValue()));
+			out.print(String.format("<tr><td>%1$s</td><td>%2$s</td></tr>", field.getKey(), field.getValue()));
 		}
 		out.print("<tr><td colspan='2'>====== Images ======</td></tr>");
 		for (String image_url : nd.getImages()) {
-	out.print(String.format("<tr><td colspan='2'><img src='%1$s'/></td></tr>", image_url));
+			out.print(String.format("<tr><td colspan='2'><img src='%1$s'/></td></tr>", image_url));
 		}
+	} catch (Exception ex) {
+		out.print(ex.getMessage());
 	}
 %>
 </table>

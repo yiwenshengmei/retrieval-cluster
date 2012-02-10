@@ -1,21 +1,11 @@
 package com.zj.retrieval.cluster.actions.node;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import org.apache.commons.io.FileUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.zj.retrieval.cluster.Node;
 import com.zj.retrieval.cluster.Util;
 import com.zj.retrieval.cluster.dao.NodeDao;
-import com.zj.retrieval.cluster.dao.UserDao;
 
 public class QueryNodeAction {
 	private String id;

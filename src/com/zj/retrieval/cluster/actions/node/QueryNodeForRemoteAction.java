@@ -17,15 +17,16 @@ public class QueryNodeForRemoteAction {
 	private String user_pwd;
 	private String node_id;
 	
-	private String message;
-	private boolean isError;
+	private String text;
 	
 	public String execute() {
 		try {
 			UserDao usrService = Util.getUserDao();
 			if (!usrService.verifyUser(user_name, user_pwd)) {
-				this.message = "Wrong user name or password.";
-				this.isError = true;
+				JSONObject jResp = new JSONObject();
+				jResp.put("isError", true);
+				jResp.put("message", "Wrong user name or password.");
+				this.text = jResp.toString();
 				return ActionSupport.ERROR;
 			}
 			
@@ -36,12 +37,20 @@ public class QueryNodeForRemoteAction {
 			processBaseInfo(jNode, nd);
 			processUserField(jNode, nd);
 			
-			this.isError = false;
-			this.message = jNode.toString(4);
+			JSONObject jResp = new JSONObject();
+			jResp.put("message", jNode);
+			jResp.put("isError", false);
+			this.text = jResp.toString();
 			return ActionSupport.SUCCESS;
 		} catch (Exception ex) {
-			this.isError = true;
-			this.message = ex.getMessage();
+			try {
+				JSONObject jResp = new JSONObject();
+				jResp.put("message", ex.getMessage());
+				jResp.put("isError", true);
+				this.text = jResp.toString();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			return ActionSupport.ERROR;
 		}
 	}
@@ -53,7 +62,12 @@ public class QueryNodeForRemoteAction {
 		jNode.put("desc", nd.getDesc());
 		jNode.put("uri", nd.getUri());
 		jNode.put("uri_name", nd.getUriName());
-		jNode.put("owl", Util.formatXML(nd.getOwl(), 4));
+		JSONArray jImageArray = new JSONArray(nd.getImages());
+//		for (String image : nd.getImages()) {
+//			jImageArray.put(image);			
+//		}
+		jNode.put("images", jImageArray);
+		jNode.put("owl", Util.html(Util.formatXML(nd.getOwl(), 4)));
 	}
 	
 	private void processUserField(JSONObject jNode, Node nd) throws JSONException {
@@ -66,12 +80,8 @@ public class QueryNodeForRemoteAction {
 		jNode.put("user_field", jUserFields);
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public boolean getIsError() {
-		return isError;
+	public String getText() {
+		return text;
 	}
 
 	public void setUser_name(String user_name) {

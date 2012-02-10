@@ -37,7 +37,6 @@ public class NodeTest {
 		action.setDesc("ThisIsDesc");
 		action.setName_en("ThisIsEnglishName");
 		action.setName("DaTouYu");
-		action.setParent_uri("Thisisparenturi");
 		action.setUri("http://xxx");
 		action.setUri_name("Thisisuriname");
 		action.setLabel("thisislabel");

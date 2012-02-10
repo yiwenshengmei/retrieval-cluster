@@ -64,7 +64,7 @@ public class UserDao {
 	}
 	public boolean verifyUser(String name, String password) {
 		Util.fixDataSourceUrl(dataSource);
-		String sql = "select count(*) form `user` where `name`=? and `password`=?";
+		String sql = "select count(*) from `user` where `name`=? and `password`=?";
 		return sqlClient.queryForInt(sql, name, password) > 0;
 	}
 	

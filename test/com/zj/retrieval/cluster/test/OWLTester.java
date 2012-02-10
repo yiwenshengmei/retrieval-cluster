@@ -19,7 +19,6 @@ public class OWLTester {
 		nd.setEnglishName("ThisIsEnglishName");
 		nd.setName("DaTouYu");
 		nd.setNodeType(NodeType.NODETYPE_INDIVIDUAL);
-		nd.setParentURI("Thisisparenturi");
 		nd.setUri("http://xxx");
 		nd.setUriName("Thisisuriname");
 		nd.setLabel("thisislabel");

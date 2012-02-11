@@ -11,13 +11,13 @@
 
 <table cellpadding="15px">
 	<tr>
-		<td><a href='add_node.jsp'>添加节点</a></td>
-		<td><a href='query_node.jsp'>管理节点</a></td>
-		<td><a href='add_user.jsp'>添加用户</a></td>
+		<td><a href='add_node.jsp' target='_blank'>添加节点</a></td>
+		<td><a href='query_node.jsp' target='_blank'>管理节点</a></td>
+		<td><a href='add_user.jsp' target='_blank'>添加用户</a></td>
 	</tr>
 	<tr>
-		<td><a href='view_url.jsp'>查看本机访问URL</a></td>
-		<td><a href='query_user.jsp'>管理用户</a></td>
+		<td><a href='view_url.jsp' target='_blank'>查看本机访问URL</a></td>
+		<td><a href='query_user.jsp' target='_blank'>管理用户</a></td>
 		<td></td>
 		<td></td>
 	</tr>

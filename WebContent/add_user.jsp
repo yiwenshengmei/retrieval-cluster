@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="common.css" type="text/css" rel="stylesheet" />
 <title>添加用户</title>
 </head>
 <body>

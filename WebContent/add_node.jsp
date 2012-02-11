@@ -4,6 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link href="common.css" type="text/css" rel="stylesheet" />
 	<title>添加物种</title>
 	<style type="text/css">
 		.no_value_input {
@@ -118,7 +119,7 @@
 			<tr><td>uri:</td><td><input name="uri" type="text"/></td></tr>
 			<tr><td>uri name: </td><td><input name="uri_name" type="text"/></td></tr>
 			<tr><td>label: </td><td><input name="label" type="text"/></td></tr>
-			<tr><td>parent name en: </td><td><input name="parent_name_en"/></td></tr>
+			<tr><td>parent name en: </td><td><input name="parent_name_en" type="text"/></td></tr>
 		</table>
 		
 		<a id="add_image" href="#">Add Image</a>

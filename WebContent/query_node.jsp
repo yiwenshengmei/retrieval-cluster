@@ -9,6 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="common.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="jquery-1.7.1.js"></script>
 <script type="text/javascript">
 	function delete_node(id) {
